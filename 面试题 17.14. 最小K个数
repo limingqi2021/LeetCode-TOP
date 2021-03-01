@@ -1,0 +1,58 @@
+
+class Solution {
+public:
+    vector<int> res;
+    vector<int> smallestK(vector<int>& arr, int k) {
+        if(arr.empty()||k==0)
+            return {};
+        if(k>arr.size())
+            return arr;
+        quickSeletion(arr,0,arr.size()-1,k-1);
+        for(int i=0;i<k;i++){
+            res.push_back(arr[i]);
+        }
+        return res;
+    }
+        // priority_queue<int> max_heap;
+        // for(int i=0;i<k;i++)
+        // max_heap.push(arr[i]);
+        // for(int i=k;i<arr.size();i++){
+        //     if(arr[i]<max_heap.top()){
+        //         max_heap.pop();
+        //         max_heap.push(arr[i]);
+        //     }
+        // }
+        // for(int i=0;i<k;i++){
+        //     res.push_back(max_heap.top());
+        //     max_heap.pop();
+        // }
+        // return res;
+
+
+    void quickSeletion(vector<int>& arr,int left,int right,int k){
+        int pos=partion(arr,left,right);
+        if(pos==k){
+            return;
+        }else if(pos>k){
+            quickSeletion(arr,left,pos-1,k);
+        }
+        else{
+        quickSeletion(arr,pos+1,right,k);
+        } 
+    }
+    int partion(vector<int>& arr,int low,int high){
+        int povit=arr[low];
+        while(low<high){
+        while(low<high&&arr[high]>=povit){
+            high--;
+        }
+        arr[low]=arr[high];
+        while(low<high&&arr[low]<=povit){
+            low++;
+        }
+        arr[high]=arr[low];
+        }
+        arr[low]=povit;
+        return low;
+    }
+};
