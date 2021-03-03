@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int len1=num1.size()-1,len2=num2.size()-1;
+        string res="";
+        int carry=0;
+        while(len1>=0||len2>=0||carry!=0){
+            int x=0,y=0,sum=0;
+            if(len1>=0){
+                x=num1[len1]-'0';
+                len1--;
+            }
+            if(len2>=0){
+                y=num2[len2]-'0';
+                len2--;
+            }
+            // x = len1>=0? (num1[len1--] - '0') : 0;
+            // y = len2>=0? (num2[len2--] - '0') : 0;
+            sum=x+y+carry;
+            carry=sum/10;
+            sum=sum%10;
+            //res.push_back('0'+sum);
+            res+='0'+sum;
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
+
