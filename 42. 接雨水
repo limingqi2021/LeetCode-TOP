@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int res=0;
+        if(height.size()<2)
+        return 0;
+        // vector<int> max_left(height.size()),max_right(height.size());
+        // max_left[0]=height[0];
+        // for(int i=1;i<height.size()-1;i++){
+        //     max_left[i]=max(max_left[i-1],height[i]);
+        // }
+        // max_right[height.size()-1]=height[height.size()-1];
+        // for(int i=height.size()-2;i>0;i--){
+        //     max_right[i]=max(max_right[i+1],height[i]);
+        // }
+        // for(int i=1;i<height.size()-1;i++){
+        //     res+=min(max_left[i],max_right[i])-height[i];
+        // }
+        int left=0,right=height.size()-1;
+        int max_left=0,max_right=0;
+        while(left<right){
+            if(height[left]<height[right]){
+                if(height[left]>max_left){
+                    max_left=height[left];
+                }else{
+                    res+=max_left-height[left];
+                }
+                left++;
+            }
+            else{
+                if(height[right]>max_right){
+                    max_right=height[right];
+                }else{
+                    res+=max_right-height[right];
+                }
+                right--;
+            }
+        }
+
+        return res;
+    }
+};
