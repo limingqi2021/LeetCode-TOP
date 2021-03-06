@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int calculate(string s) {
+        int res=0,cur=0;
+        char preOption='+';
+        s+='#';
+        stack<int> st;
+        for(int i=0;i<s.size();i++){
+            if(s[i]==' ') 
+                continue;
+            if(s[i]<='9'&&s[i]>='0'){
+                cur=cur*10+(s[i]-'0');
+            }
+            else{
+                if(preOption=='+') st.push(cur);
+                if(preOption=='-') st.push(-cur);
+                if(preOption=='*') st.top()=st.top()*cur;
+                if(preOption=='/') st.top()=st.top()/cur;
+                preOption=s[i];
+                cur=0;
+            }
+        }
+        while(!st.empty()){
+            res+=st.top();
+            st.pop();
+        }
+        return res;
+    }
+};
