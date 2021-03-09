@@ -1,0 +1,66 @@
+class Solution {
+public:
+    vector<vector<int>> edge;
+    vector<int> visit;
+    vector<int> result;
+    bool flag=true;
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        // vector<vector<int>> edge(numCourses);
+        // vector<int> indegree(numCourses);
+        // vector<int> result;
+        // for(int i=0;i<prerequisites.size();i++){
+        //     indegree[prerequisites[i][0]]++;
+        //     edge[prerequisites[i][1]].push_back(prerequisites[i][0]);
+        // }
+        // queue<int> q;
+        // for(int i=0;i<numCourses;i++){
+        //     if(indegree[i]==0)
+        //         q.push(i);
+        // }
+        // int visit=0;
+        // while(!q.empty()){
+        //     visit++;
+        //     int temp=q.front();
+        //     q.pop();
+        //     result.push_back(temp);
+        //     for(int i=0;i<edge[temp].size();i++){
+        //         indegree[edge[temp][i]]--;
+        //         if(indegree[edge[temp][i]]==0){
+        //             q.push(edge[temp][i]);
+        //         }
+        //     }
+        // }
+        // if(visit!=numCourses)
+        //     return {};
+        // return result;
+        edge.resize(numCourses);
+        visit.resize(numCourses);
+        for(int i=0;i<prerequisites.size();i++){
+            edge[prerequisites[i][1]].push_back(prerequisites[i][0]);
+        }
+        for(int i=0;i<numCourses&&flag==true;i++){
+            if(visit[i]==0)
+                dfs(i);
+        }
+        if(flag==false)
+            return {};
+        reverse(result.begin(),result.end());
+        return result;
+    }
+    void dfs(int k){
+        visit[k]=1;
+        for(int i=0;i<edge[k].size();i++){
+            if(visit[edge[k][i]]==0)
+            {
+                dfs(edge[k][i]);
+                if(!flag)
+                    return;
+            }else if(visit[edge[k][i]]==1){
+                flag=false;
+                return;
+            }
+        }
+        visit[k]=-1;
+        result.push_back(k);
+    }
+};
