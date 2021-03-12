@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> permute(vector<int>& nums) {
+        if(nums.size()==0)
+        return {};
+        partion(nums,0);
+        return res;
+    }
+    //要&必须交换回来，不&可以不交换
+    void partion(vector<int> nums,int k){
+        if(k==nums.size()-1){
+            res.push_back(nums);
+            return ;
+        }
+        for(int i=k;i<nums.size();i++){
+            swap(nums[k],nums[i]);
+            partion(nums,k+1);
+            //swap(nums[i],nums[k]);
+        }
+    }
+};
