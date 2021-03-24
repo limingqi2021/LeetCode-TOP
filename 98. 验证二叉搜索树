@@ -10,22 +10,36 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-    vector<int> res;
-    stack<TreeNode*> s;
-    long pre=LONG_MIN;
-    while(root!=nullptr||!s.empty()){
-        while(root!=nullptr){
-            s.push(root);
-            root=root->left;
-        }
-        root=s.top();
-        s.pop();
-        if(root->val<=pre){
-            return false;
-        }
-        pre=root->val;
-        root=root->right;
+    // vector<int> res;
+    // stack<TreeNode*> s;
+    // long pre=LONG_MIN;
+    // while(root!=nullptr||!s.empty()){
+    //     while(root!=nullptr){
+    //         s.push(root);
+    //         root=root->left;
+    //     }
+    //     root=s.top();
+    //     s.pop();
+    //     if(root->val<=pre){
+    //         return false;
+    //     }
+    //     pre=root->val;
+    //     root=root->right;
+    // }
+    // return true;
+    if(!root) return true;
+    vector<int> num;
+    inorder(root,num);
+    for(int i=1;i<num.size();i++){
+        if(num[i-1]>=num[i])
+        return false;
     }
     return true;
+    }
+    void inorder(TreeNode* root,vector<int>& num){
+        if(root==nullptr) return;
+        inorder(root->left,num);
+        num.push_back(root->val);
+        inorder(root->right,num);
     }
 };
