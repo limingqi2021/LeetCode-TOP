@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        set<int> s;
+        for(int i:nums){
+            s.insert(i);
+        }
+        int maxLen=0,tempLen=0,currentNum;
+        for(int i:s){
+            if(!s.count(i-1)){
+                currentNum=i;
+                tempLen=1;
+                while(s.count(i+1)){
+                    i++;
+                    tempLen++;
+                }
+                maxLen=max(maxLen,tempLen);
+            }
+        }
+        return maxLen;
+    }
+};
